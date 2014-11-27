@@ -1,4 +1,7 @@
-# Going along with a tutorial. I hate this code. Way too many magic numbers.
+# Going along with a tutorial. I hate this code. Way too many magic numbers.. Verbose comments that 
+# would be better handled by more, shorter methods with descriptive names. Not to mention the lack of
+# class structure. Bleh!
+
 #paddle-game.rb
 require "rubygems"
 require "gosu"
@@ -38,6 +41,15 @@ class GameWindow < Gosu::Window
 	#moving the right paddle	
 		unless (@vrp < 0 && @rp_y <= 0) || (@vrp > 0 &&  @rp_y >= 540) # Don't move off the screen
 			@rp_y = @rp_y + @vrp
+		end
+		
+	# collision of left paddle and ball
+		if @x > 30 && @x < 41 && @y > @lp_y - 10 && @y < @lp_y + 70
+			@vx += 5
+		end
+	# collision of  right paddle and ball
+		if @x > 770 && @x < 759 && @y > @rp_y - 10 && @y < @rp_y + 70
+			@vx -= 5
 		end
 	end
 	
