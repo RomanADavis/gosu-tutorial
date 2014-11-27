@@ -1,3 +1,4 @@
+# Going along with a tutorial. I hate this code. Way too many magic numbers.
 #paddle-game.rb
 require "rubygems"
 require "gosu"
@@ -13,11 +14,13 @@ class GameWindow < Gosu::Window
 		@ball_image = Gosu::Image.new(self, "ping.png", false)
 		@paddle_image = Gosu::Image.new(self, "pong.png", false)
 		@lp_x, @lp_y, @vlp = 20, 270, 0
+		@rp_x, @rp_y, @vrp = 760, @lp_y, 0
 	end
 	
 	def draw
 		@ball_image.draw(@x, @y, 1)
 		@paddle_image.draw(@lp_x, @lp_y, 1)
+		@paddle_image.draw(@rp_x, @rp_y, 1)
 	end
 	
 	def update
@@ -29,17 +32,27 @@ class GameWindow < Gosu::Window
 		@vy = -@vy if @y> 580 || @y < 0
 
 	#moving the left paddle	
-		@lp_y = @lp_y + @vlp
+		unless (@vlp < 0 && @lp_y <= 0) || (@vlp > 0 &&  @lp_y >= 540) # Don't move off the screen
+			@lp_y = @lp_y + @vlp
+		end
+	#moving the right paddle	
+		unless (@vrp < 0 && @rp_y <= 0) || (@vrp > 0 &&  @rp_y >= 540) # Don't move off the screen
+			@rp_y = @rp_y + @vrp
+		end
 	end
 	
 	def button_down(id)
 		@vlp -= 5 if id == Gosu::KbW
 		@vlp += 5 if id == Gosu::KbZ
+		@vrp -= 5 if id == Gosu::KbI
+		@vrp += 5 if id == Gosu::KbN
 	end
 	
 	def button_up(id)
 		@vlp += 5 if id == Gosu::KbW
 		@vlp -= 5 if id == Gosu::KbZ
+		@vrp += 5 if id == Gosu::KbI
+		@vrp -= 5 if id == Gosu::KbN
 	end
 end
 
