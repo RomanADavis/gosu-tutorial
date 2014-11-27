@@ -10,7 +10,7 @@ class GameWindow < Gosu::Window
 	end
 	
 	def update
-	
+		@bouncing_ball.move
 	end
 	
 	def draw
@@ -23,6 +23,7 @@ class Ball
 	def initialize(window)
 		@image = Gosu::Image.new(window, "ball.png", false)
 		@x = @y = 50
+		@vx = @vy = 5
 	end
 	
 	def draw
@@ -30,7 +31,10 @@ class Ball
 	end
 	
 	def move
-
+		@x += @vx
+		@y += @vy
+		@vx = -@vx if @x > 540 || @x < 0
+		@vy = -@vy if @y > 380 || @y < 0
 	end
 	
 end
