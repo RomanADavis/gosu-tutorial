@@ -2,8 +2,8 @@
 require "gosu"
 
 class Ball
-	def initialize(window, x, y)
-		@x, @y = x, y
+	def initialize(window)
+		@x, @y = rand(780), rand(580)
 		@vx, @vy = rand(-7..7), rand(-7..7)
 		@image  = Gosu::Image.new(window, "ping.png", false)
 	end
@@ -24,7 +24,7 @@ class GameWindow < Gosu::Window
 	def initialize
 		super 800, 600, false
 		self.caption = "Breakout"
-		@balls = Array.new(20) {Ball.new(self, rand(780), rand(580))}
+		@balls = Array.new(200) {Ball.new(self)}
 	end
 	
 	def update
